@@ -766,7 +766,8 @@ class TransformersPreprocessor(TextPreprocessor):
 
         if "bert-base-japanese" in model_name:
             self.tokenizer_type = transformers.BertJapaneseTokenizer
-
+            
+        self.tokenizer_type = BertTokenizer
         tokenizer = self.tokenizer_type.from_pretrained(model_name)
 
         self.tok = tokenizer
