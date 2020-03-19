@@ -15,7 +15,7 @@ from transformers import DistilBertConfig, TFDistilBertForSequenceClassification
 from transformers import AlbertConfig, TFAlbertForSequenceClassification, AlbertTokenizer, TFAlbertModel
 from transformers import CamembertConfig, TFCamembertForSequenceClassification, CamembertTokenizer, TFCamembertModel
 from transformers import XLMRobertaConfig, TFXLMRobertaForSequenceClassification, XLMRobertaTokenizer, TFXLMRobertaModel
-from transformers import AutoConfig, TFAutoModelForSequenceClassification, AutoTokenizer, TFAutoModel
+from transformers import AutoConfig, TFAutoModelForSequenceClassification, AutoTokenizer, TFAutoModel, BertTokenizer
 
 TRANSFORMER_MODELS = {
     'bert':       (BertConfig, TFBertForSequenceClassification, BertTokenizer, TFBertModel),
@@ -758,7 +758,7 @@ class TransformersPreprocessor(TextPreprocessor):
             #raise ValueError('unsupported model name %s' % (model_name))
             self.config = AutoConfig.from_pretrained(model_name)
             self.model_type = TFAutoModelForSequenceClassification
-            self.tokenizer_type = AutoTokenizer
+            self.tokenizer_type = BertTokenizer
         else:
             self.config = None # use default config
             self.model_type = TRANSFORMER_MODELS[self.name][1]
