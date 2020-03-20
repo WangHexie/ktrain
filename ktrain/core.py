@@ -391,7 +391,7 @@ class Learner(ABC):
 
 
     def lr_find(self, start_lr=1e-7, lr_mult=1.01, max_epochs=None, 
-                stop_factor=4, show_plot=False, verbose=1):
+                stop_factor=4, show_plot=False, verbose=1, class_weight=None):
         """
         Plots loss as learning rate is increased.  Highest learning rate 
         corresponding to a still falling loss should be chosen.
@@ -465,7 +465,8 @@ class Learner(ABC):
                                 workers=self.workers, 
                                 use_multiprocessing=self.use_multiprocessing, 
                                 batch_size=self.batch_size,
-                                verbose=verbose)
+                                verbose=verbose,
+                                class_weight=class_weight)
         except KeyboardInterrupt:
             # re-load current weights
             self.model.load_weights(weightfile)
