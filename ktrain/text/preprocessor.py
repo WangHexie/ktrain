@@ -758,7 +758,7 @@ class TransformersPreprocessor(TextPreprocessor):
             #raise ValueError('unsupported model name %s' % (model_name))
             self.config = AutoConfig.from_pretrained(model_name)
             self.model_type = TFAutoModelForSequenceClassification
-            self.tokenizer_type = BertTokenizer
+            self.tokenizer_type = AutoTokenizer
         else:
             self.config = None # use default config
             self.model_type = TRANSFORMER_MODELS[self.name][1]
@@ -767,8 +767,13 @@ class TransformersPreprocessor(TextPreprocessor):
         if "bert-base-japanese" in model_name:
             self.tokenizer_type = transformers.BertJapaneseTokenizer
             
-        self.tokenizer_type = BertTokenizer
-        tokenizer = self.tokenizer_type.from_pretrained(model_name)
+        
+        try:
+            tokenizer = self.tokenizer_type.from_pretrained(model_name)
+        except Exception:
+            self.tokenizer_type = BertTokenizer
+            tokenizer = self.tokenizer_type.from_pretrained(model_name)
+            
 
         self.tok = tokenizer
         self.tok_dct = None
