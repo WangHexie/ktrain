@@ -55,7 +55,7 @@ class LRFinder:
 
     def find(self, train_data, steps_per_epoch, use_gen=False,
              start_lr=1e-7, lr_mult=1.01, max_epochs=None, 
-             batch_size=U.DEFAULT_BS, workers=1, use_multiprocessing=False, verbose=1):
+             batch_size=U.DEFAULT_BS, workers=1, use_multiprocessing=False, verbose=1, class_weight=None):
         """
         Track loss as learning rate is increased.
         NOTE: batch_size is ignored when train_data is instance of Iterator.
@@ -114,11 +114,12 @@ class LRFinder:
                    epochs=epochs, 
                    workers=workers, use_multiprocessing=use_multiprocessing,
                    verbose=verbose,
-                   callbacks=[callback])
+                   callbacks=[callback],
+                   class_weight=class_weight)
         else:
             self.model.fit(train_data[0], train_data[1],
                             batch_size=batch_size, epochs=epochs, verbose=verbose,
-                            callbacks=[callback])
+                            callbacks=[callback], class_weight=class_weight)
 
 
         # Restore the weights to the state before model fitting
