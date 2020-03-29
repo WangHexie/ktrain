@@ -24,7 +24,7 @@ class TextPredictor(Predictor):
         return self.c
 
 
-    def predict(self, texts, return_proba=False):
+        def predict(self, texts, return_proba=False, batch_size=None):
         """
         Makes predictions for a list of strings where each string is a document
         or text snippet.
@@ -45,7 +45,7 @@ class TextPredictor(Predictor):
         #    return_proba=True
         #    treat_multilabel = True
         texts = self.preproc.preprocess(texts)
-        preds = self.model.predict(texts)
+        preds = self.model.predict(texts, batch_size=batch_size)
         if U.is_huggingface(model=self.model):
             # convert logits to probabilities for Hugging Face models
             if multilabel and self.c:
@@ -63,13 +63,13 @@ class TextPredictor(Predictor):
 
 
 
-    def predict_proba(self, texts):
+    def predict_proba(self, texts, batch_size=None):
         """
         Makes predictions for a list of strings where each string is a document
         or text snippet.
         Returns probabilities of each class.
         """
-        return self.predict(texts, return_proba=True)
+        return self.predict(texts, return_proba=True,  batch_size=batch_size)
 
 
     def explain(self, doc, truncate_len=512, all_targets=False):
