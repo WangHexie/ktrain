@@ -24,7 +24,7 @@ class TextPredictor(Predictor):
         return self.c
 
 
-        def predict(self, texts, return_proba=False, batch_size=None):
+    def predict(self, texts, return_proba=False, batch_size=None):
         """
         Makes predictions for a list of strings where each string is a document
         or text snippet.
